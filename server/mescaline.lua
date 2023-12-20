@@ -30,7 +30,7 @@ AddEventHandler("Mescaline:pickupCane", function(loc)
         MescalineCooldown(loc)
         local Player = QBCore.Functions.GetPlayer(source)
         Player.Functions.AddItem(Config.rewardMescaline, 1)
-        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.rewardItemheroin], "add")
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.rewardMescaline], "add")
     end
 end)
 
@@ -42,10 +42,8 @@ local src = source
 local Player = QBCore.Functions.GetPlayer(src)
 
  if Player.Functions.RemoveItem("cactusbulb", 1) then
-		Player.Functions.AddItem("driedmescaline", 1)
-		TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[driedmescaline], "add", 1)
-else
-	TriggerClientEvent('QBCore:Notify', src, "No Cactus Bulbs", "error")
+	Player.Functions.AddItem("driedmescaline", 1)
+	 TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[driedmescaline], "add", 1)
 end
 end)
 
