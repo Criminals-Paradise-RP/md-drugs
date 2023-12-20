@@ -26,13 +26,16 @@ local function TooFarAway()
     availableDrugs = {}
 end
 
-local function PoliceCallCornerselling()
-   print"tell your devs to read the readme. it isnt hard for most people but they are dumb"
+local function PoliceCall()
+    exports['ps-dispatch']:DrugSale()
 end
 
 local function RobberyPed()
     if Config.UseTarget then
-        exports['qb-target']:AddTargetEntity(stealingPed, {
+        exports['qb-target']:AddEntityZone('stealingPed', stealingPed, {
+            name = 'stealingPed',
+            debugPoly = false,
+        }, {
             options = {
                 {
                     icon = 'fas fa-magnifying-glass',
@@ -46,7 +49,6 @@ local function RobberyPed()
                         TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[stealData.item], "add")
                         stealingPed = nil
                         stealData = {}
-                        ClearPedTasks(PlayerPedId())
                         exports['qb-target']:RemoveZone('stealingPed')
                     end,
                     canInteract = function(entity)
@@ -89,7 +91,7 @@ local function SellToPed(ped)
     local successChance = math.random(1, 100)
     local scamChance = math.random(1, 100)
     local getRobbed = math.random(1, 100)
-    if successChance <= QBConfig.SuccessChance then hasTarget = false return end
+    if successChance <= Config.SuccessChance then hasTarget = false return end
 
     local drugType = math.random(1, #availableDrugs)
     local bagAmount = math.random(1, availableDrugs[drugType].amount)
@@ -97,9 +99,9 @@ local function SellToPed(ped)
 
     currentOfferDrug = availableDrugs[drugType]
 
-    local ddata = QBConfig.DrugsPrice[currentOfferDrug.item]
+    local ddata = Config.DrugsPrice[currentOfferDrug.item]
     local randomPrice = math.random(ddata.min, ddata.max) * bagAmount
-    if scamChance <= QBConfig.ScamChance then randomPrice = math.random(3, 10) * bagAmount end
+    if scamChance <= Config.ScamChance then randomPrice = math.random(3, 10) * bagAmount end
 
     SetEntityAsNoLongerNeeded(ped)
     ClearPedTasks(ped)
@@ -107,7 +109,7 @@ local function SellToPed(ped)
     local coords = GetEntityCoords(PlayerPedId(), true)
     local pedCoords = GetEntityCoords(ped)
     local pedDist = #(coords - pedCoords)
-    if getRobbed <= QBConfig.RobberyChance then
+    if getRobbed <= Config.RobberyChance then
         TaskGoStraightToCoord(ped, coords, 15.0, -1, 0.0, 0.0)
     else
         TaskGoStraightToCoord(ped, coords, 1.2, -1, 0.0, 0.0)
@@ -116,7 +118,7 @@ local function SellToPed(ped)
     while pedDist > 1.5 do
         coords = GetEntityCoords(PlayerPedId(), true)
         pedCoords = GetEntityCoords(ped)
-        if getRobbed <= QBConfig.RobberyChance then
+        if getRobbed <= Config.RobberyChance then
             TaskGoStraightToCoord(ped, coords, 15.0, -1, 0.0, 0.0)
         else
             TaskGoStraightToCoord(ped, coords, 1.2, -1, 0.0, 0.0)
@@ -135,7 +137,7 @@ local function SellToPed(ped)
             local coords2 = GetEntityCoords(PlayerPedId(), true)
             local pedCoords2 = GetEntityCoords(ped)
             local pedDist2 = #(coords2 - pedCoords2)
-            if getRobbed <= QBConfig.RobberyChance then
+            if getRobbed <= Config.RobberyChance then
                 TriggerServerEvent('md-drugs:server:robCornerDrugs', drugType, bagAmount)
                 QBCore.Functions.Notify("You Got Robbed " .. bagAmount .. " Bags of " .. currentOfferDrug.item.. "!")
                 stealingPed = ped
@@ -156,7 +158,10 @@ local function SellToPed(ped)
                 if pedDist2 < 1.5 and cornerselling then
                     if Config.UseTarget and not zoneMade then
                         zoneMade = true
-                        exports['qb-target']:AddTargetEntity(ped, {
+                        exports['qb-target']:AddEntityZone('sellingPed', ped, {
+                            name = 'sellingPed',
+                            debugPoly = false,
+                        }, {
                             options = {
                                 {
                                     icon = 'fas fa-hand-holding-dollar',
@@ -170,7 +175,7 @@ local function SellToPed(ped)
                                             SetEntityAsNoLongerNeeded(entity)
                                             ClearPedTasksImmediately(entity)
                                             lastPed[#lastPed + 1] = entity
-
+                                            exports['qb-target']:RemoveZone('sellingPed')
                                             return
                                         else
                                             QBCore.Functions.Progressbar("cornerSelling", "selling Drugs", '5000', false, false, {
@@ -189,7 +194,7 @@ local function SellToPed(ped)
                                                 ClearPedTasksImmediately(entity)
                                                 lastPed[#lastPed + 1] = entity
                                                 exports['qb-target']:RemoveZone('sellingPed')
-                                                PoliceCallCornerselling()
+                                                PoliceCall()
                                             end)
                                         end
                                     end,
@@ -273,7 +278,7 @@ end
 -- Events
 RegisterNetEvent('md-drugs:client:cornerselling', function()
     QBCore.Functions.TriggerCallback('md-drugs:server:cornerselling:getAvailableDrugs', function(result)
-        if CurrentCops >= QBConfig.MinimumDrugSalePolice then
+        if CurrentCops >= Config.MinimumDrugSalePolice then
             if IsPedInAnyVehicle(PlayerPedId(), false) then
                 QBCore.Functions.Notify("youre in a car", 'error')
             else
