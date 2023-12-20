@@ -5,39 +5,34 @@ Config.rewardItem = "coca_leaf"
 Config.rewardItemheroin = "poppyresin"
 Config.rewardshrooms = "shrooms"
 Config.rewardMescaline = "cactusbulb"
-Config.rewardWeed = "wetcannabis"
 Config.oxtarget = true --- turn to true if you use oxtarget
 Config.respawnTime = 150 -- Seconds
-Config.Fuel = "LegacyFuel" -- type the name of script you use i.e. ps-fuel, cdn-fuel, LegacyFuel
-Config.OxInv = true -- true if you use ox inventory, false if you use qb/lj/ps
-Config.TierSystem = true -- allows for three tiers of certain drugs ( coke, heroin, crack
-Config.StupidassNewQbItemName = false -- true if you have updated your items.lua from base qb after november 2023 because changing item names this far in a framework is 3 IQ points total
-Config.imagelink = "ox_inventory/web/images/"
+Config.cd = false ---- if you use cd-dispatch
+Config.ps = true --- if you use ps dispatch
+Config.gks = false -- true if you use gks, false if you use qb or renewed phone
+Config.Fuel = "cdn-fuel" -- type the name of script you use i.e. ps-fuel, cdn-fuel, LegacyFuel
 
-
-------------- Cocaine -- new animations require to be in a certain spot or they get fucky. uses bob74 ipl 
-Config.CokeTeleIn = vector3(198.16, -1276.92, 29.33)-- where you target to go inside
-Config.CokeTeleOut = vector3(1088.81, -3187.57, -38.99) -- where you target to leave
-Config.MakePowder = vector3(1087.29, -3195.33, -38.99) -- where you chop your coca leaves to make powder
+------------- Cocaine locations
+Config.makecokepowder = vector3(-1365.47, -323.64, 39.41) --  where to take coca leaves to make powder
+Config.cutcokeone = vector3(-1362.8, -322.13, 39.49) -- cutting stage  coke with baking soda
+Config.bagcoke = vector3(-1364.8, -320.26, 39.51) -- bag stage 
 
 ---------------- Crack locations
-Config.makecrack = vector3(2434.07, 4969.39, 42.35) -- make crack with baking soda with cut coke 1-3
-Config.bagcrack = vector3(2435.85, 4965.3, 42.35) ---  bag crack 1-3 stages
+Config.makecrack = vector3(-1366.22, -317.84, 39.55) -- make crack with baking soda with cut coke 1-3
+Config.bagcrack = vector3(-1367.28, -315.88, 39.59) ---  bag crack 1-3 stages
 
 ------------------------- LSD Locations
 Config.lysergicacid = vector3(-1370.71, -317.3, 39.51) -- get lysergic acid
 Config.diethylamide = vector3(-1371.71, -316.02, 39.53) -- get diethylamide
 Config.gettabs = vector3(-1370.77, -314.51, 39.58) -- buy tab paper
-Config.buylsdlabkit = vector3(-1368.89, -318.72, 39.5)--  buy lab kit
-Config.tabcost = 100 -- price per piece of tab paper event does 10 at a time
-Config.lsdlabkitcost = 10000 -- price of the lsd lab kit
-------------------------- Heroin Locations
+Config.buylsdlabkit = vector3(-1369.26, -312.04, 39.66)--  buy lab kit
 
-Config.dryplant = vector3(-1364.7, -323.21, 39.44) -- turn resin into powder
-Config.buyheroinlabkit = vector3(-1361.08, -321.41, 39.53) -- buy heroin lab kit
-Config.cutheroinone = vector3(-1364.86, -320.15, 39.51) -- cut heroin stage 1-3 with baking soda
-Config.fillneedle = vector3(-1366.18, -317.81, 39.56) -- fill needles with heroin
-Config.heroinlabkitprice = 10000 -- price of the lsd lab kit
+------------------------- Heroin Locations
+Config.dryplant = vector3(-1367.05, -311.07, 39.72) -- turn resin into powder
+Config.buyheroinlabkit = vector3(-1368.19, -309.84, 39.73) -- buy heroin lab kit
+Config.cutheroinone = vector3(-1368.87, -308.96, 39.75) -- cut heroin stage 1-3 with baking soda
+Config.fillneedle = vector3(-1373.13, -311.36, 39.63) -- fill needles with heroin
+
 ------------ XTC
 Config.isosafrole = vector3(892.7, -957.2, 39.28) -- where to steal isosafrole
 Config.mdp2p = vector3(901.07, -963.11, 39.28) -- where to steal mdp2p
@@ -49,107 +44,39 @@ Config.buypress = vector3(868.3, -960.72, 26.28)--  Where you buy your presses
 Config.DryOut = vector3(2622.6, 4222.57, 43.6) -- Place to dry out mescaline into usuable drug
 Config.Badtrip = 20 -- number means % chance to spawn a clone that chases and attacks while on mescaline
 
-
--------------- lean
-Config.SyrupVendor = vector3(362.71, -577.84, 39.3) -- where the mission ped starts
-Config.StartLoc = {
-vector3(-2307.22, 434.77, 174.47), -- where the truck spawns
-vector3(614.75, 1786.26, 199.39),
-vector3(-224.89, 6388.32, 31.59)
-}
-
-
 ---------- Pharma
-Config.FillPrescription = vector3(2432.89, 4252.2, 36.35) ----------- this is where you want people to take their prescription to get a bottle of pills. They use bottle to get a random amount of prescription pills
-Config.PharmaJob = "ambulance" -- what job role you need to be on to get the command
-
-
--------------- weed
-Config.Teleout = vector3(1066.31, -3183.36, -39.16) -- where you target to tele in
-Config.Telein = vector3(244.74, 374.54, 105.74) -- where you target to tele out
-Config.MakeButter = vector3(1045.48, -3198.49, -38.22) -- where you make cannabutter and baked edibles
-Config.MakeOil = vector3(1038.90, -3198.66, -38.17-1) -- where you make shatter
-
-Config.WeedDry = { -- where you dry leaves 
-vector3(1043.0, -3191.59, -38.39),
-vector3(1041.0, -3191.59, -38.39),
-vector3(1045.0, -3191.59, -38.39),
-vector3(1039.0, -3191.59, -38.39),
-}
-
-Config.Joblock = false -- if you want weed to be a job
-Config.weedjob = "" -- what the job name is
-Config.Weed = { --- this is the store for the weed ingridients
-    label = "Weed Shop",
-    slots = 8,
-    items = {
-        [1] = {name = "weedgrinder", 	label = "Weed Grinder",		price = 25, 	amount = 50, 	info = {}, type = "item", slot = 1},
-		[2] = {name = "mdbutter", 		label = "Butter",			price = 25, 	amount = 50, 	info = {}, type = "item", slot = 2},
-		[3] = {name = "flour", 			label = "Flour", 			price = 25, 	amount = 50, 	info = {}, type = "item", slot = 3},
-		[4] = {name = "chocolate",  	label = "chocolate",		price = 25, 	amount = 50, 	info = {}, type = "item", slot = 4},
-		[5] = {name = "butane", 		label = "Butane", 			price = 25, 	amount = 50, 	info = {}, type = "item", slot = 5},
-		[6] = {name = "butanetorch", 	label = "Butane Torch", 	price = 2, 		amount = 1000, 	info = {}, type = "item", slot = 6},
-		[7] = {name = "dabrig", 		label = "Dab Rig", 			price = 2, 		amount = 1000, 	info = {}, type = "item", slot = 7},
-		[8] = {name = "mdwoods", 		label = "MD Woods", 		price = 2, 		amount = 1000, 	info = {}, type = "item", slot = 8},	
-	}
-}
-
------------------ Wholesale
-Config.SuccessfulChance = 90 --- this is the chance of a Success wholesale 1-100
-Config.AlertPoliceWholesale = 10 -- 1-100 of how often it will alert police
-
-
---- travelling merchant
+Config.FillPrescription = vector3(2432.43, 4253, 45.2) ----------- this is where you want people to take their prescription to get a bottle of pills. They use bottle to get a random amount of prescription pills
+------- travelling merchant
 
 Config.Travellingmerchant = { ------------ these are the random locations the merchant can spawn on script start. whatever you want for the merchant is in Config.Items right below
-	vector3(-119.06, -977.19, 304.25),
-	vector3(-1522.23, 1475.63, 112.02),
-	vector3(-3278.99, 973.33, 5.34),
+	vector4(-119.06, -977.19, 304.25, 103.88),
+	vector4(-1522.23, 1475.63, 112.02, 23.57),
+	vector4(-3278.99, 973.33, 5.34, 90.02),
 }
 Config.Items = { --- this is the store for the travelling merchant
     label = "Travelling Merchant",
-    slots = 24,
+    slots = 13,
     items = {
-        [1] = {name = "tab_paper", 		label = "Tab Paper", 		price = 50, 	amount = 50, 	info = {}, type = "item", slot = 1},
-        [2] = {name = "bakingsoda", 	label = "Baking Soda",		price = 25, 	amount = 50, 	info = {}, type = "item", slot = 2},
-		[3] = {name = "isosafrole", 	label = "Isosafrole",		price = 25, 	amount = 50, 	info = {}, type = "item", slot = 3},
-		[4] = {name = "mdp2p", 			label = "MDP2P", 			price = 25, 	amount = 50, 	info = {}, type = "item", slot = 4},
-		[5] = {name = "lysergic_acid",  label = "Lysergic Acid",	price = 25, 	amount = 50, 	info = {}, type = "item", slot = 5},
-		[6] = {name = "diethylamide",   label = "Diethylamide", 	price = 25, 	amount = 50, 	info = {}, type = "item", slot = 6},
-		[7] = {name = "empty_weed_bag", label = "Empty Weed Bag", 	price = 2, 	    amount = 1000, 	info = {}, type = "item", slot = 7},
-		[8] = {name = "emptyvial", 		label = "Empty Vial", 		price = 2, 	    amount = 1000, 	info = {}, type = "item", slot = 8},
-		[9] = {name = "needle", 		label = "Syringe", 			price = 2, 		amount = 1000,	info = {}, type = "item", slot = 9},
-		[10] = {name = "cokeburner", 	label = "Nokie Burner", 	price = 25, 	amount = 50, 	info = {}, type = "item", slot = 10},
-		[11] = {name = "crackburner", 	label = "Juke Burner",		price = 2, 		amount = 50, 	info = {}, type = "item", slot = 11},
-		[12] = {name = "lsdburner",		label = "SideKick Burner",	price = 2, 		amount = 50, 	info = {}, type = "item", slot = 12},
-		[13] = {name = "heroinburner", 	label = "Razr Burner",		price = 2, 		amount = 50, 	info = {}, type = "item", slot = 13},
-		[14] = {name = "mdlean", 		label = "Sizzurup", 		price = 50, 	amount = 50, 	info = {}, type = "item", slot = 14},
-        [15] = {name = "weedgrinder", 	label = "Weed Grinder",		price = 25, 	amount = 50, 	info = {}, type = "item", slot = 15},
-		[16] = {name = "mdbutter", 		label = "Butter",			price = 25, 	amount = 50, 	info = {}, type = "item", slot = 16},
-		[17] = {name = "flour", 		label = "Flour", 			price = 25, 	amount = 50, 	info = {}, type = "item", slot = 17},
-		[18] = {name = "chocolate",  	label = "chocolate",		price = 25, 	amount = 50, 	info = {}, type = "item", slot = 18},
-		[19] = {name = "butane", 		label = "Butane", 			price = 25, 	amount = 50, 	info = {}, type = "item", slot = 19},
-		[20] = {name = "butanetorch", 	label = "Butane Torch", 	price = 2, 		amount = 1000, 	info = {}, type = "item", slot = 20},
-		[21] = {name = "dabrig", 		label = "Dab Rig", 			price = 2, 		amount = 1000, 	info = {}, type = "item", slot = 21},
-		[22] = {name = "mdwoods", 		label = "MD Woods", 		price = 2, 		amount = 1000, 	info = {}, type = "item", slot = 22},
-		[23] = {name = "leancup", 		label = "Empty Cup", 		price = 25, 	amount = 50, 	info = {}, type = "item", slot = 23},
-        [24] = {name = "xtcburner", 	label = "ENV Burner", 		price = 25, 	amount = 50, 	info = {}, type = "item", slot = 24},
-		
+        [1] = {name = "tab_paper", price = 50,amount = 50, info = {}, type = "item", slot = 1},
+        [2] = {name = "bakingsoda", price = 25, amount = 50, info = {}, type = "item", slot = 2},
+		[3] = {name = "isosafrole", price = 25, amount = 50, info = {}, type = "item", slot = 3},
+		[4] = {name = "mdp2p", price = 25, amount = 50, info = {}, slot = 4},
+		[5] = {name = "lysergic_acid", price = 25, amount = 50, info = {}, type = "item", slot = 5},
+		[6] = {name = "diethylamide", price = 25, amount = 50, info = {}, type = "item", slot = 6},
+		[7] = {name = "empty_weed_bag", price = 2, amount = 1000, info = {}, type = "item", slot = 7},
+		[8] = {name = "emptyvial", price = 2, amount = 1000, info = {}, type = "item", slot = 8},
+		[9] = {name = "needle", price = 2, amount = 1000, info = {}, type = "item", slot = 9},
+		[10] = {name = "cokeburner", price = 25, amount = 50, info = {}, type = "item", slot = 10},
+		[11] = {name = "crackburner", price = 2, amount = 50, info = {}, type = "item", slot = 11},
+		[12] = {name = "lsdburner", price = 2, amount = 50, info = {}, type = "item", slot = 12},
+		[13] = {name = "heroinburner", price = 2, amount = 50, info = {}, type = "item", slot = 13},
 	}
 }
 --------------------------------------- oxy runs
 ---- How oxyruns work. You pay for a truck, you get in it and it gives a route. There is a 20% chance that the car will be "hot" and you have to ditch it. No Routes will spawn if that pops up
 ----- when you get to the drop off point third eye the truck. You will carry a box to the ped. He will give you cash, some oxy and maybe a random item. Rinse and repeat
-
-
 Config.truckspawn = vector4(1449.65, -1486.0, 63.22, 342.58) --- where the truck will spawn when you pay for it 
 Config.Payfortruck = vector3(1437.64, -1491.91, 63.62) --- where you pay for the truck
-Config.TruckPrice = 500 -- amount the truck will cost to rent
-Config.OxyRunCompleteCash = 200 -- base price you get for completeing a run. 50% if the car needs to be ditched
-Config.OxyRunDitchChance = 20 -- % of a fail mission and having to ditch the car and not get a new order
-Config.OxyItemChance = 50 -- chance to recieve an item from the OxyRandItems list below 
-Config.OxyItemAmount = 1 -- amount of the item you recieve when you get an item from OxyRandItems
-Config.PoliceAlertOxy = 90 -- This is a % out of 100 to alert police
 
 Config.oxylocations = { -- These are different locations where a ped spawns.
     vector4(-2352.32, 266.78, 165.3, 23.46),
@@ -164,22 +91,14 @@ Config.oxylocations = { -- These are different locations where a ped spawns.
 	vector4(-1827.93, 782.36, 138.29, 219.99),
 	vector4(-320.84, 2818.73, 59.45, 337.22),
 	vector4(474.88, 2609.56, 44.48, 357.0),
-}
+}	
 
 Config.OxyRandItems = { -- random items you get for completing the mission
 "oxy",
 "lockpick",
-"cryptostick",
 }
-
-
----------------------- Meth Config
-Config.MethTeleIn = vector3(-2222.04, 303.99, 174.6) -- where you target to tele in
-Config.MethTeleOut = vector3(996.91, -3200.83, -36.39) -- where you target to tele out
-Config.MethHeistStart = vector3(-1102.93, -3066.76, 14.00) -- where you get the mission to get ingridients
-
-
------------------------------ these are the locations where props will be spawned to be picked 
+Config.PoliceAlertOxy = 90 -- This is a % out of 100 to alert police
+	------------------------ Drug Picking locations. 
 Config.CocaPlant = {
     [1] = {
         location = vector3(1474.25, -2643.87, 42.88),
@@ -253,168 +172,6 @@ Config.CocaPlant = {
     },
 }
 
-Config.WeedPlant = {
-    [1] = {
-        location = vector3(1049.63, -3202.12, -39.15),
-        heading = 334.49,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [2] = {
-        location = vector3(1050.85, -3202.15, -39.15),
-        heading = 329.56,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [3] = {
-        location = vector3(1052.01, -3202.22, -39.13),
-        heading = 25.16,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [4] = {
-        location = vector3(1052.99, -3202.15, -39.15),
-        heading = 21.52,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [5] = {
-        location = vector3(1053.08, -3201.11, -39.13),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [6] = {
-        location = vector3(1052.91, -3199.99, -39.14),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [7] = {
-        location = vector3(1053.02, -3198.97, -39.11),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [8] = {
-        location = vector3(1051.95, -3198.93, -39.11),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [9] = {
-        location = vector3(1051.96, -3199.86, -39.12),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [10] = {
-        location = vector3(1051.93, -3201.17, -39.12),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [11] = {
-        location = vector3(1050.98, -3201.13, -39.14),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [12] = {
-        location = vector3(1050.89, -3200.07, -39.12),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [13] = {
-        location = vector3(1050.89, -3198.95, -39.15),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [14] = {
-        location = vector3(1049.72, -3198.95, -39.15),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-	[15] = {
-        location = vector3(1049.98, -3200.1, -39.14),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-	[16] = {
-        location = vector3(1049.82, -3201.01, -39.15),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-	[17] = {
-        location = vector3(1053.07, -3194.51, -39.15),
-        heading = 334.49,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [18] = {
-        location = vector3(1052.97, -3195.55, -39.15),
-        heading = 329.56,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [19] = {
-        location = vector3(1052.82, -3196.58, -39.15),
-        heading = 25.16,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [20] = {
-        location = vector3(1052.94, -3197.59, -39.15),
-        heading = 21.52,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [21] = {
-        location = vector3(1051.92, -3197.54, -39.14),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [22] = {
-        location = vector3(1051.88, -3196.61, -39.15),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [23] = {
-        location = vector3(1051.82, -3195.52, -39.15),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [24] = {
-        location = vector3(1051.95, -3194.38, -39.15),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [25] = {
-        location = vector3(1050.88, -3194.31, -39.15),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [26] = {
-        location = vector3(1050.78, -3195.29, -39.15),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [27] = {
-        location = vector3(1050.76, -3196.49, -39.15),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [28] = {
-        location = vector3(1050.77, -3197.62, -39.15),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [29] = {
-        location = vector3(1049.64, -3197.61, -39.14),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-    [30] = {
-        location = vector3(1049.64, -3196.59, -39.15),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-	[31] = {
-        location = vector3(1049.62, -3195.51, -39.15),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-	[32] = {
-        location = vector3(1049.66, -3194.36, -39.15),
-        heading = 202.97,
-        model = "bkr_prop_weed_lrg_01b"
-    },
-}
 
 Config.PoppyPlants = {
     [1] = {
@@ -489,90 +246,89 @@ Config.shrooms = {
     [1] = {
         location = vector3(2185.14, 5183.81, 57.48),
         heading = 334.49,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
     [2] = {
         location = vector3(2174.45, 5187.85, 57.43),
         heading = 329.56,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
     [3] = {
         location = vector3(2166.22, 5196.56, 58.0),
         heading = 25.16,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
     [4] = {
         location = vector3(2166.82, 5204.83, 58.63),
         heading = 21.52,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
 	[5] = {
         location = vector3(2174.84, 5205.82, 59.19),
         heading = 334.49,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
     [6] = {
         location = vector3(2184.46, 5201.23, 59.2),
         heading = 329.56,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
     [7] = {
         location = vector3(2192.45, 5194.89, 58.86),
         heading = 25.16,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
     [8] = {
         location = vector3(2207.53, 5187.81, 58.95),
         heading = 21.52,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
 	[9] = {
         location = vector3(2213.46, 5191.11, 59.81),
         heading = 334.49,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
     [10] = {
         location = vector3(2218.31, 5180.0, 58.18),
         heading = 329.56,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
     [11] = {
         location = vector3(2212.75, 5172.35, 57.2),
         heading = 25.16,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
     [12] = {
         location = vector3(2208.56, 5167.06, 56.34),
         heading = 21.52,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
 	 [13] = {
         location = vector3(2196.9, 5158.59, 54.84),
         heading = 21.52,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
    
     [14] = {
         location = vector3(2191.62, 5174.91, 56.68),
         heading = 21.52,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
     [15] = {
         location = vector3(2190.18, 5182.54, 57.47),
         heading = 21.52,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
     [16] = {
         location = vector3(2185.85, 5190.49, 58.1),
         heading = 21.52,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
     [17] = {
         location = vector3(2179.95, 5194.19, 58.26),
         heading = 21.52,
-        model = "mushroom"
+        model = "prop_stoneshroom1"
     },
-	
    
    
 }
@@ -643,7 +399,6 @@ Config.Mescaline = {
         heading = 21.52,
         model = "prop_cactus_03"
     },
-   
     [14] = {
         location = vector3(2609.8, 4222.12, 41.19),
         heading = 21.52,
@@ -667,4 +422,206 @@ Config.Mescaline = {
    
    
 }
+---------------------- even though there is a comment out section since this feature was released i get constant questions about it. so ill make a note. if you ask for support saying these peds arent spawning ill delete your ticket. 
+---------------------- This only happens if the wholesale is a setup. They will spawn and shoot you. THEY ONLY SPAWN IF ITS A SETUP
+Config.Cokepeds = { ------------- this is where the setup peds will spawn to kill you
+	vector3(640.24, 644.18, 129.09),
+	vector3(642.64, 649.71, 128.91),
+	vector3(646.47, 650.65, 128.91),
+	vector3(652.8, 649.88, 128.95),
+	vector3(656.87, 631.85, 128.91),
+	vector3(649.96, 620.57, 128.91),
+}
 
+Config.CrackPeds = { ------------- this is where the setup peds will spawn to kill you
+	vector3(1873.25, 299.28, 164.27),
+	vector3(1891.37, 292.12, 163.68),
+	vector3(1886.68, 274.1, 162.96),
+	vector3(1869.67, 265.97, 163.72),
+	vector3(1836.88, 251.09, 162.56),
+	vector3(1853.3, 230.64, 162.09),
+}
+
+Config.heroinPeds = { ------------- this is where the setup peds will spawn to kill you
+	vector3(2740.93, 1389.09, 24.5),
+	vector3(2713.38, 1392.31, 24.54),
+	vector3(2703.66, 1355.09, 24.52),
+	vector3(2680.34, 1363.39, 24.52),
+	vector3(2766.1, 1388.15, 24.52),
+	vector3(2764.76, 1364.16, 24.52),
+}
+
+Config.lsdPeds = { ------------- this is where the setup peds will spawn to kill you
+	vector3(-1564.49, 838.85, 184.18),
+	vector3(-1545.33, 863.67, 181.44),
+	vector3(-1542.18, 802.71, 184.24),
+	vector3(-1524.31, 820.44, 181.79),
+}
+
+-----------  qb-drugs update built in here below
+----------- Everything is now a target and not displaytext. Dealers are no longer just doors, they will spawn peds where you place your dealer. This is a literally qb-drugs with SLIGHT edits. mainly added peds for deliveries, made everything a target
+------------ and changed the range a ped will walk up to you to be a bigger radius. 
+Config.SuccessChance = 50
+Config.ScamChance = 25
+Config.RobberyChance = 25
+Config.MinimumDrugSalePolice = 0
+
+Config.DrugsPrice = {
+    ["weed_white-widow"] = { min = 15, max = 24 },
+    ["weed_og-kush"] = {min = 15, max = 28},
+    ["weed_skunk"] = {min = 15, max = 31 },
+    ["weed_amnesia"] = {min = 18, max = 34},
+    ["weed_purple-haze"] = {min = 18, max = 37},
+    ["weed_ak47"] = {min = 18, max = 40},
+    ["crack_baggy"] = {min = 18, max = 34},
+    ["cokebaggy"] = {min = 18, max = 37},
+    ["cokebaggystagetwo"] = {min = 18, max = 40},
+	["cokebaggystagethree"] = {min = 18, max = 40},
+	["heroin_ready"] = {min = 18, max = 40},
+	["heroin_readystagetwo"] = {min = 18, max = 40},
+	["heroin_readystagethree"] = {min = 18, max = 40},
+	["baggedcracked"] = {min = 18, max = 40},
+	["baggedcrackedstagetwo"] = {min = 18, max = 40},
+	["baggedcrackedstagethree"] = {min = 18, max = 40},
+	["white_playboys"] = {min = 18, max = 40},
+	["white_playboys2"] = {min = 18, max = 40},
+	["white_playboys3"] = {min = 18, max = 40},
+	["white_playboys4"] = {min = 18, max = 40},
+	["blue_playboys"] = {min = 18, max = 40},
+	["blue_playboys2"] = {min = 18, max = 40},
+	["blue_playboys3"] = {min = 18, max = 40},
+	["blue_playboys4"] = {min = 18, max = 40},
+	["red_playboys"] = {min = 18, max = 40},
+	["red_playboys2"] = {min = 18, max = 40},
+	["red_playboys3"] = {min = 18, max = 40},
+	["red_playboys4"] = {min = 18, max = 40},
+	["orange_playboys"] = {min = 18, max = 40},
+	["orange_playboys2"] = {min = 18, max = 40},
+	["orange_playboys3"] = {min = 18, max = 40},
+	["orange_playboys4"] = {min = 18, max = 40},
+	["white_aliens"] = {min = 18, max = 40},
+	["white_aliens2"] = {min = 18, max = 40},
+	["white_aliens3"] = {min = 18, max = 40},
+	["white_aliens4"] = {min = 18, max = 40},
+	["blue_aliens"] = {min = 18, max = 40},
+	["blue_aliens2"] = {min = 18, max = 40},
+	["blue_aliens3"] = {min = 18, max = 40},
+	["blue_aliens4"] = {min = 18, max = 40},
+	["red_aliens"] = {min = 18, max = 40},
+	["red_aliens2"] = {min = 18, max = 40},
+	["red_aliens3"] = {min = 18, max = 40},
+	["red_aliens4"] = {min = 18, max = 40},
+	["orange_aliens"] = {min = 18, max = 40},
+	["orange_aliens2"] = {min = 18, max = 40},
+	["orange_aliens3"] = {min = 18, max = 40},
+	["orange_aliens4"] = {min = 18, max = 40},
+	["white_pl"] = {min = 18, max = 40},
+	["white_pl2"] = {min = 18, max = 40},
+	["white_pl3"] = {min = 18, max = 40},
+	["white_pl4"] = {min = 18, max = 40},
+	["blue_pl"] = {min = 18, max = 40},
+	["blue_pl2"] = {min = 18, max = 40},
+	["blue_pl3"] = {min = 18, max = 40},
+	["blue_pl4"] = {min = 18, max = 40},
+	["red_pl"] = {min = 18, max = 40},
+	["red_pl2"] = {min = 18, max = 40},
+	["red_pl3"] = {min = 18, max = 40},
+	["red_pl4"] = {min = 18, max = 40},
+	["orange_pl"] = {min = 18, max = 40},
+	["orange_pl2"] = {min = 18, max = 40},
+	["orange_pl3"] = {min = 18, max = 40},
+	["orange_pl4"] = {min = 18, max = 40},
+	["white_trolls"] = {min = 18, max = 40},
+	["white_trolls2"] = {min = 18, max = 40},
+	["white_trolls3"] = {min = 18, max = 40},
+	["white_trolls4"] = {min = 18, max = 40},
+	["blue_trolls"] = {min = 18, max = 40},
+	["blue_trolls2"] = {min = 18, max = 40},
+	["blue_trolls3"] = {min = 18, max = 40},
+	["blue_trolls4"] = {min = 18, max = 40},
+	["red_trolls"] = {min = 18, max = 40},
+	["red_trolls2"] = {min = 18, max = 40},
+	["red_trolls3"] = {min = 18, max = 40},
+	["red_trolls4"] = {min = 18, max = 40},
+	["orange_trolls"] = {min = 18, max = 40},
+	["orange_trolls2"] = {min = 18, max = 40},
+	["orange_trolls3"] = {min = 18, max = 40},
+	["orange_trolls4"] = {min = 18, max = 40},
+	["white_cats"] = {min = 18, max = 40},
+	["white_cats2"] = {min = 18, max = 40},
+	["white_cats3"] = {min = 18, max = 40},
+	["white_cats4"] = {min = 18, max = 40},
+	["blue_cats"] = {min = 18, max = 40},
+	["blue_cats2"] = {min = 18, max = 40},
+	["blue_cats3"] = {min = 18, max = 40},
+	["blue_cats4"] = {min = 18, max = 40},
+	["red_cats"] = {min = 18, max = 40},
+	["red_cats2"] = {min = 18, max = 40},
+	["red_cats3"] = {min = 18, max = 40},
+	["red_cats4"] = {min = 18, max = 40},
+	["orange_cats"] = {min = 18, max = 40},
+	["orange_cats2"] = {min = 18, max = 40},
+	["orange_cats3"] = {min = 18, max = 40},
+	["orange_cats4"] = {min = 18, max = 40},	
+}
+
+	Debug = false -- true / false - Currently prints the vector3 and label of locations when requesting a delivery
+    NearbyDeliveries = false -- true / false - Do you want deliveries to be within a certain amount of units?
+    DeliveryWithin = 2000 -- int (Default 2000) - How many units do you want the delivery location to be within from the player when making a delivery request?
+    Config.Dealers = {}
+    --UseTarget =  GetConvar('UseTarget', 'false') == 'true', -- Use qb-target interactions (don't change this, go to your server.cfg and add setr UseTarget true)
+    PoliceCallChance = 99 --in percentage (if 99, theres the 99% to call the police)
+
+    -- Shop Config
+Config.Products = {
+        [1] = {name = "weed_white-widow_seed", price = 15, amount = 150, info = {}, type = "item", slot = 1, minrep = 0},
+        [2] = {name = "weed_skunk_seed", price = 15, amount = 150, info = {}, type = "item", slot = 1, minrep = 20},
+        [3] = {name = "weed_purple-haze_seed", price = 15, amount = 150, info = {}, type = "item", slot = 1, minrep = 40},
+		[4] = {name = "weed_og-kush_seed", price = 15, amount = 150, info = {}, type = "item", slot = 1, minrep = 60},
+		[5] = {name = "weed_amnesia_seed", price = 15, amount = 150, info = {}, type = "item", slot = 1, minrep = 80},
+}
+
+Config.UseMarkedBills = true -- true for marked bills, false for cash
+Config.DeliveryRepGain = 1 -- amount of rep gained per delivery
+Config.DeliveryRepLoss = 1 -- amount of rep lost if delivery wrong or late
+Config.PoliceDeliveryModifier = 2 -- amount to multiply active cop count by
+Config.WrongAmountFee = 2 -- divide the payout by this value for wrong delivery amount
+Config.OverdueDeliveryFee = 4 -- divide the payout by this value for overdue delivery
+
+Config.DeliveryItems = {
+   [1] = {
+       ["item"] = "weed_brick",
+       ["minrep"] = 0,
+       ['payout'] = 1000
+   },
+   [2] = {
+       ["item"] = "coke_brick",
+       ["minrep"] = 0,
+       ['payout'] = 1000
+   },
+}
+
+Config.DeliveryLocations = {
+        [1] = {
+            ["label"] = "Stripclub",
+            ["coords"] = vector3(106.24, -1280.32, 29.24),
+        },
+        [2] = {
+            ["label"] = "Vinewood Video",
+            ["coords"] = vector3(223.98, 121.53, 102.76),
+        },
+        [3] = {
+            ["label"] = "Taxi",
+            ["coords"] = vector3(882.67, -160.26, 77.11),
+        },
+        [4] = {
+            ["label"] = "Resort",
+            ["coords"] = vector3(-1245.63, 376.21, 75.34),
+        },
+        [5] = {
+            ["label"] = "Bahama Mamas",
+            ["coords"] = vector3(-1383.1, -639.99, 28.67),
+        },
+ }
+ 
+ 
