@@ -1,95 +1,39 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-
 local deliveryBlip = nil
-local PZone = nil
-local listen = false
 local carryPackage = nil
 
 
-RegisterNetEvent("md-drugs:client:getoxytruck")
-AddEventHandler("md-drugs:client:getoxytruck", function() 
+RegisterNetEvent("md-drugs:client:getoxytruck", function() 
 if TriggerServerEvent('md-drugs:server:payfortruck') then
 end
 end)
-
-function Policecall()
-	exports['ps-dispatch']:DrugSale()
-end
 
 
 RegisterNetEvent("md-drugs:Client:getoxylocation", function()
 	local coords = Config.truckspawn
 	local ModelHash = "burrito3" -- Use Compile-time hashes to get the hash of this model
-	if not IsModelInCdimage(ModelHash) then return end
-	RequestModel(ModelHash) -- Request the model
-	while not HasModelLoaded(ModelHash) do -- Waits for the model to load
-	Wait(0)
-	end
+	lib.requestModel(ModelHash, Config.RequestModelTime)
 	local oxycar = CreateVehicle(ModelHash,Config.truckspawn.x, Config.truckspawn.y,Config.truckspawn.z, Config.truckspawn.h, true, false)
     SetEntityHeading(oxycar, coords.w)
     exports[Config.Fuel]:SetFuel(oxycar, 100.0)
     TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(oxycar))
-	TriggerEvent('QBCore:Notify', 'Your truck is here', 'success')
+	Notify(Lang.oxy.truck, 'success')
 	TriggerEvent("md-drugs:client:getoxylocationroute")
     SetVehicleEngineOn(oxycar, true, true)
-	exports['qb-target']:AddTargetEntity(oxycar, {
-    options = {
-        {
-            type = "client",
-            event = "md-drugs:client:getfromtrunk",
-            icon = "fas fa-box-circle-check",
-            label = "Get Package",
-            
-        },
-    },
-    distance = 3.0
-})
+    local options = {
+        { event = "md-drugs:client:getfromtrunk", icon = "fas fa-box-circle-check", label = "Get Package"},
+    }
+	if Config.oxtarget then
+		exports.ox_target:addLocalEntity(oxycar, options)
+	else 
+		exports['qb-target']:AddTargetEntity(oxycar, {options = options, distance = 2.0})
+	end  
+	
 end)
 
-CreateThread(function()
- if Config.oxtarget then
- exports.ox_target:addBoxZone({ -- 963.37, -2122.95, 31.47
-		coords = Config.Payfortruck,
-		size = vec3(2,2,2),
-		debugPoly = false,
-		rotation = 45,
-		options = {
-			{
-            type = "client",
-            event = "md-drugs:client:getoxytruck",
-			icon = "fas fa-sign-in-alt",
-			label = "Pay For Truck",
-			
-			
-			},
-		},
-	})
- else
- exports['qb-target']:AddBoxZone("getoxylocation",Config.Payfortruck,1.5, 1.75, { -- 963.37, -2122.95, 31.47
-	name = "getoxylocation",
-	heading = 11.0,
-	debugPoly = false,
-	minZ = Config.Payfortruck-2,
-	maxZ = Config.Payfortruck+2,
-}, {
-	options = {
-		{
-            type = "client",
-            event = "md-drugs:client:getoxytruck",
-			icon = "fas fa-sign-in-alt",
-			label = "Pay For Truck",
-			
-			
-		},
-		
-	},
-	distance = 2.5
- })
-	
-end	
-end)
-RegisterNetEvent("md-drugs:client:getoxylocationroute")
-AddEventHandler("md-drugs:client:getoxylocationroute", function() 
+
+
+RegisterNetEvent("md-drugs:client:getoxylocationroute", function() 
 	Wait(100)
 	local unlucky = math.random(1,100)
     local CurrentLocation = Config.oxylocations[math.random(#Config.oxylocations)]
@@ -98,55 +42,44 @@ AddEventHandler("md-drugs:client:getoxylocationroute", function()
         RemoveBlip(deliveryBlip)
     end
 	if CurrentLocation ~= nil then
-    deliveryBlip = AddBlipForCoord(CurrentLocation)
-    SetBlipSprite(deliveryBlip, 1)
-    SetBlipDisplay(deliveryBlip, 2)
-    SetBlipScale(deliveryBlip, 1.0)
-    SetBlipAsShortRange(deliveryBlip, false)
-    SetBlipColour(deliveryBlip, 27)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName("drug Meet")
-    EndTextCommandSetBlipName(deliveryBlip)
-    SetBlipRoute(deliveryBlip, true)
-	druglocation = CircleZone:Create(CurrentLocation, 5,{ name = "oxyruns", debugPoly = false })
-	druglocation:onPlayerInOut(function(isPointInside) if isPointInside then  RemoveBlip(deliveryBlip) end end)
+    	deliveryBlip = AddBlipForCoord(CurrentLocation)
+    	SetBlipSprite(deliveryBlip, 1)
+    	SetBlipDisplay(deliveryBlip, 2)
+    	SetBlipScale(deliveryBlip, 1.0)
+    	SetBlipAsShortRange(deliveryBlip, false)
+    	SetBlipColour(deliveryBlip, 27)
+    	BeginTextCommandSetBlipName("STRING")
+    	AddTextComponentSubstringPlayerName("drug Meet")
+    	EndTextCommandSetBlipName(deliveryBlip)
+    	SetBlipRoute(deliveryBlip, true)
+		local current = "g_m_y_famdnf_01"
+		lib.requestModel(current, Config.RequestModelTime)
+    	local oxybuyer = CreatePed(0, current,CurrentLocation.x,CurrentLocation.y,CurrentLocation.z-1, CurrentLocation.w, false, false)
+		SetEntityHeading(oxybuyer, 180)
+    	FreezeEntityPosition(oxybuyer, true)
+    	SetEntityInvincible(oxybuyer, true)
+	repeat
+		Wait(1000)
+	until #(GetEntityCoords(PlayerPedId()) - vector3(CurrentLocation.x,CurrentLocation.y,CurrentLocation.z)) < 5.0
+		RemoveBlip(deliveryBlip)
+		PoliceCall(Config.PoliceAlertOxy)
+		local options = {
+    	        { type = "client", label = "Talk To Buyer", icon = "fas fa-eye", event = "md-drugs:client:giveoxybox", ped = oxybuyer},
+    	    }
+		if Config.oxtarget then
+			exports.ox_target:addLocalEntity(oxybuyer, options)
+		else 
+			exports['qb-target']:AddTargetEntity(oxybuyer, {options = options, distance = 2.0})
+		end   
 	end
-	if unluck <= Config.PoliceAlertOxy then 
-        Policecall()
-    end
-	local current = "g_m_y_famdnf_01"
-            RequestModel(current)
-            while not HasModelLoaded(current) do
-                Wait(0)
-            end
-            
-            drugdealer = CreatePed(0, current,CurrentLocation.x,CurrentLocation.y,CurrentLocation.z-1, false, false)
-			SetEntityHeading(drugdealer, 180)
-             FreezeEntityPosition(drugdealer, true)
-            SetEntityInvincible(drugdealer, true)
-	exports['qb-target']:AddTargetEntity(drugdealer, {
-                options = {
-                    {
-                        type = "client",
-                        label = "Talk To Buyer",
-                        icon = "fas fa-eye",
-                        event = "md-drugs:client:giveoxybox"
-                    },
-                },
-                distance = 2.0
-            })
-	 
-	
 end)
 
 
-
-RegisterNetEvent("md-drugs:client:getfromtrunk")
-AddEventHandler("md-drugs:client:getfromtrunk", function() 
+RegisterNetEvent("md-drugs:client:getfromtrunk", function() 
 	if carryPackage then
-		QBCore.Functions.Notify("You Cant Carry More Than One", "error")
+		Notify(Lang.oxy.cantcarry, "error")
 	else	
-			local pos = GetEntityCoords(PlayerPedId(), true)
+		local pos = GetEntityCoords(PlayerPedId(), true)
 		RequestAnimDict('anim@heists@box_carry@')
 		while (not HasAnimDictLoaded('anim@heists@box_carry@')) do
 			Wait(7)
@@ -162,27 +95,17 @@ AddEventHandler("md-drugs:client:getfromtrunk", function()
 	end	
 end)
 
-RegisterNetEvent("md-drugs:client:giveoxybox")
-AddEventHandler("md-drugs:client:giveoxybox", function() 
+
+RegisterNetEvent("md-drugs:client:giveoxybox", function(data) 
 	if carryPackage then
-		QBCore.Functions.Progressbar("drink_something", "handing over oxy", 4000, false, true, {
-			disableMovement = false,
-			disableCarMovement = false,
-			disableMouse = false,
-			disableCombat = true,
-			disableInventory = true,
-		}, {}, {}, {}, function()-- Done
-			TriggerServerEvent("md-drugs:server:giveoxybox")
-			
-			ClearPedTasks(PlayerPedId())
-			
-			DeleteEntity(drugdealer)
-			 DetachEntity(carryPackage, true, true)
-			 DeleteObject(carryPackage)
-			 carryPackage = nil
-		end)
+		if not progressbar(Lang.oxy.hand, 4000, 'uncuff') then return end
+		TriggerServerEvent("md-drugs:server:giveoxybox")
+		DeleteEntity(data.ped)
+		DetachEntity(carryPackage, true, true)
+		DeleteObject(carryPackage)
+	    carryPackage = nil
 	else
-	QBCore.Functions.Notify("cant be empty handed idiot", "error")
+		Notify(Lang.oxy.empty, "error")
 	end
 end)
 

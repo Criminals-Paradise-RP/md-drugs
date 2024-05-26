@@ -1,4 +1,4 @@
-QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = exports['qb-core']:GetCoreObject()
 local currentDealer = nil
 local dealerIsHome = false
 local waitingDelivery = nil
@@ -18,7 +18,7 @@ AddStateBagChangeHandler('isLoggedIn', nil, function(_, _, value)
         Wait(1000)
         InitZones()
     else
-        if not Config.UseTarget and dealerCombo then dealerCombo:destroy() end
+        if dealerCombo then dealerCombo:destroy() end
     end
 end)
 
@@ -35,23 +35,51 @@ local function GetClosestDealer()
         end
     end
 end
+RegisterNetEvent('md-drugs:client:opendealermenu', function()
+    local dealermenu = {}
+    if Config.StupidassNewQbItemName then
+        for k, v in pairs (QBConfig.ProductsStupidNameRewrite) do 
+			if  QBCore.Functions.GetPlayerData().metadata["dealerrep"] >= v.minrep then 
+            dealermenu[#dealermenu + 1] = {
+                          icon =  GetImage(v.name),
+                          title = QBCore.Shared.Items[v.name].label,
+                          description = v.price,
+                          event = "md-drugs:client:travellingmerchantox",
+                          args = {
+                              item = v.name,
+                              cost = v.price,
+                             amount = v.amount,
+                             table = QBConfig.ProductsStupidNameRewrite,
+                             num = k,
+                            }
+                        }
+               
+                   lib.registerContext({id = 'dealermenu',title = "Dealer Menu", options = dealermenu})
+			end	   
+        end           
+    else
+         for k, v in pairs (QBConfig.Products) do 
+			if  QBCore.Functions.GetPlayerData().metadata["dealerrep"] >= v.minrep then 
+            dealermenu[#dealermenu + 1] = {
+                          icon =  GetImage(v.name),
+                          title = QBCore.Shared.Items[v.name].label,
+                          description = v.price,
+                          event = "md-drugs:client:travellingmerchantox",
+                          args = {
+                              item = v.name,
+                              cost = v.price,
+                             amount = v.amount,
+                             table = QBConfig.Products,
+                             num = k,
+                            }
+                        }
 
-local function OpenDealerShop()
-    GetClosestDealer()
-    local repItems = {}
-    repItems.label = Config.Dealers[currentDealer]["name"]
-    repItems.items = {}
-    repItems.slots = 30
-    for k, _ in pairs(Config.Dealers[currentDealer]["products"]) do
-        if QBCore.Functions.GetPlayerData().metadata["dealerrep"] >= Config.Dealers[currentDealer]["products"][k].minrep then
-            repItems.items[k] = Config.Dealers[currentDealer]["products"][k]
-        end
+                   lib.registerContext({id = 'dealermenu',title = "Dealer Menu", options = dealermenu})
+			end	   
+        end     
     end
-    TriggerServerEvent("inventory:server:OpenInventory", "shop", "Dealer_"..Config.Dealers[currentDealer]["name"], repItems)
-end
-
-
-
+    lib.showContext('dealermenu')
+end)
 local function RandomDeliveryItemOnRep()
     local myRep = QBCore.Functions.GetPlayerData().metadata["dealerrep"]
     local availableItems = {}
@@ -70,7 +98,7 @@ local function RequestDelivery()
         local amount = math.random(1, 3)
         local item = RandomDeliveryItemOnRep()
 
-        QBCore.Functions.Notify("Currently searching for a delivery...", 'success')
+        Notify(Lang.Delivery.search, 'success')
         if Config.NearbyDeliveries == true then
             local playerPed = PlayerPedId()
             local playerCoords = GetEntityCoords(playerPed)
@@ -95,7 +123,7 @@ local function RequestDelivery()
                     ["item"] = item
                 }
             else
-                QBCore.Functions.Notify("Nothing Close By", 'error')
+                Notify(Lang.Delivery.none, 'error')
                 
             end
         else
@@ -129,7 +157,7 @@ local function RequestDelivery()
            })
         end)
     else
-        QBCore.Functions.Notify("You Havent Even Finished The One I Told You Too", 'error')
+        Notify(Lang.Delivery.busy, 'error')
     end
 end
 
@@ -144,26 +172,17 @@ local function DeliveryTimer()
 end
 
 
-local function PoliceCall()
-    exports['ps-dispatch']:DrugSale()
-end
 
 local function DeliverStuff()
     if deliveryTimeout > 0 then
         Wait(500)
-        exports["rpemotes"]:EmoteCommandStart("uncuff", 0)
-        PoliceCall()
-        QBCore.Functions.Progressbar("work_dropbox", "handing Off Package", 3500, false, true, {
-            disableMovement = true,
-            disableCarMovement = true,
-            disableMouse = false,
-            disableCombat = true,
-        }, {}, {}, {}, function() -- Done
-            TriggerServerEvent('md-drugs:server:successDelivery', activeDelivery, true)
-            activeDelivery = nil
-            exports['qb-target']:RemoveZone('drugDeliveryZone')
-            ClearPedTasks(PlayerPedId())
-        end)
+        TriggerEvent('animations:client:EmoteCommandStart', {'uncuff'}) 
+        PoliceCall(20)
+        progressbar(Lang.Delivery.pack, 4000, 'uncuff')
+        TriggerServerEvent('md-drugs:server:successDelivery', activeDelivery, true)
+        activeDelivery = nil
+        exports['qb-target']:RemoveZone('drugDeliveryZone')
+        ClearPedTasks(PlayerPedId())
     else
         TriggerServerEvent('md-drugs:server:successDelivery', activeDelivery, false)
     end
@@ -172,7 +191,7 @@ end
 
 local function SetMapBlip(x, y)
     SetNewWaypoint(x, y)
-    QBCore.Functions.Notify("Marked On Your Map", 'success');
+    Notify(Lang.Delivery.found, 'success');
 end
 
 -- PolyZone specific functions
@@ -191,7 +210,7 @@ function InitZones()
          testdealer = CreatePed(0, Ped,v.coords.x,v.coords.y,v.coords.z-1, 90.0, false, false)
           FreezeEntityPosition(testdealer, true)
          SetEntityInvincible(testdealer, true)
-         exports["qb-target"]:AddBoxZone("dealer_"..k, vector3(v.coords.x, v.coords.y, v.coords.z), 1.5, 1.5, {
+           exports["qb-target"]:AddBoxZone("dealer_"..k, vector3(v.coords.x, v.coords.y, v.coords.z), 1.5, 1.5, {
              name = "dealer_"..k,
              heading = v.heading,
              minZ = v.coords.z - 1,
@@ -203,8 +222,8 @@ function InitZones()
                      icon = 'fas fa-user-secret',
                      label = "Deliver",
                      action = function()
-                         RequestDelivery()
-                     end,
+				RequestDelivery()
+			end,
                      canInteract = function()
                          GetClosestDealer()
                          local hours = GetClockHours()
@@ -233,7 +252,7 @@ function InitZones()
                      icon = 'fas fa-user-secret',
                      label = "Open Shop",
                      action = function()
-                         OpenDealerShop()
+                        TriggerEvent('md-drugs:client:opendealermenu')
                      end,
                      canInteract = function()
                          GetClosestDealer()
@@ -263,8 +282,8 @@ end
 -- Events
 
 RegisterNetEvent('md-drugs:client:RefreshDealers', function(DealerData)
-    if not Config.UseTarget and dealerCombo then dealerCombo:destroy() end
-    Config.Dealers = DealerData
+    if dealerCombo then dealerCombo:destroy() end
+    QBConfig.Dealers = DealerData
     Wait(1000)
     InitZones()
 end)
@@ -280,7 +299,7 @@ end)
 RegisterNetEvent('md-drugs:client:setLocation', function(locationData)
     if activeDelivery then
         SetMapBlip(activeDelivery["coords"]["x"], activeDelivery["coords"]["y"])
-        QBCore.Functions.Notify("Already Delivering", 'error')
+        Notify(Lang.Delivery.already, 'error')
         return
     end
     activeDelivery = locationData
@@ -296,7 +315,7 @@ RegisterNetEvent('md-drugs:client:setLocation', function(locationData)
      Buyer = CreatePed(0, Ped,activeDelivery["coords"].x, activeDelivery["coords"].y, activeDelivery["coords"].z-1, 180.0, false, false)
      FreezeEntityPosition(Buyer, true)
     SetEntityInvincible(Buyer, true)
-    if Config.UseTarget then
+    
        exports['qb-target']:AddTargetEntity(Buyer, {
             options = {
                 {
@@ -317,7 +336,7 @@ RegisterNetEvent('md-drugs:client:setLocation', function(locationData)
             },
             distance = 1.5
         })
-    end
+    
 end)
 
 RegisterNetEvent('md-drugs:client:sendDeliveryMail', function(type, deliveryData)
@@ -344,5 +363,5 @@ end)
 
 RegisterCommand('checkrep', function()
     local drugrep = QBCore.Functions.GetPlayerData().metadata["dealerrep"]
-    QBCore.Functions.Notify("Current Rep: "..drugrep)
-end)
+    Notify(Lang.Delivery.checkrep..drugrep)
+end, false)

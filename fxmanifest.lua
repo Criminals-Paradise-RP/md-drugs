@@ -3,7 +3,7 @@ author "mustache_dom"
 description "drugs by mustache dom"
 fx_version "cerulean"
 game "gta5"
-
+version  '3.5.4'
 client_scripts {
 	'client/**.lua',
 	'@PolyZone/client.lua',
@@ -19,12 +19,13 @@ server_scripts {
 shared_scripts {
 	'@ox_lib/init.lua',
 	'shared/**.lua',
+
 }
 
 
 lua54 'yes'
 
-dependency '/assetpacks'
+
 dependency 'bob74_ipl'
 files {
 	'stream/mushroom.ytyp'
